@@ -1,6 +1,6 @@
 radio.onReceivedNumber(function (receivedNumber) {
     basic.showNumber(receivedNumber)
-    if (win != 10) {
+    if (win != 3) {
         if (receivedNumber < dice) {
             basic.showIcon(IconNames.Happy)
             win += 1
@@ -8,12 +8,14 @@ radio.onReceivedNumber(function (receivedNumber) {
             basic.showIcon(IconNames.Sad)
         } else {
             basic.showIcon(IconNames.Asleep)
+            win += 1
         }
     } else {
-        basic.showString("U WIN")
+        basic.showString("U WON")
+        radio.sendString("U LOST")
     }
 })
-input.onGesture(Gesture.Shake, function () {
+input.onButtonPressed(Button.A, function () {
     basic.showLeds(`
         . . . . .
         . . . . .
@@ -38,6 +40,9 @@ input.onGesture(Gesture.Shake, function () {
     dice = randint(1, 6)
     basic.showNumber(dice)
     radio.sendNumber(dice)
+})
+radio.onReceivedString(function (receivedString) {
+    basic.showString(receivedString)
 })
 let dice = 0
 let win = 0
