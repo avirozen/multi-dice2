@@ -1,18 +1,14 @@
 radio.onReceivedNumber(function (receivedNumber) {
     basic.showNumber(receivedNumber)
-    if (win != 3) {
-        if (receivedNumber < dice) {
-            basic.showIcon(IconNames.Happy)
-            win += 1
-        } else if (receivedNumber > dice) {
-            basic.showIcon(IconNames.Sad)
-        } else {
-            basic.showIcon(IconNames.Asleep)
-            win += 1
+    if (receivedNumber < dice) {
+        basic.showIcon(IconNames.Happy)
+        win += 1
+        if (win == 3) {
+            basic.showString("U WON")
+            radio.sendString("U LOST")
         }
-    } else {
-        basic.showString("U WON")
-        radio.sendString("U LOST")
+    } else if (receivedNumber > dice) {
+        basic.showIcon(IconNames.Sad)
     }
 })
 input.onButtonPressed(Button.A, function () {
